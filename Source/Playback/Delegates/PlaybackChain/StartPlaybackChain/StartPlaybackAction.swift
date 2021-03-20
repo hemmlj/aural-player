@@ -34,6 +34,7 @@ class StartPlaybackAction: PlaybackChainAction {
         Messenger.publish(TrackTransitionNotification(beginTrack: context.currentTrack, beginState: context.currentState,
                                                       endTrack: context.requestedTrack, endState: .playing))
         
-        chain.proceed(context)
+        // Mark the playback chain as having completed execution.
+        chain.complete(context)
     }
 }

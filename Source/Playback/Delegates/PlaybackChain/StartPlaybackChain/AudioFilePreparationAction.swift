@@ -6,9 +6,12 @@ import Foundation
  */
 class AudioFilePreparationAction: PlaybackChainAction {
     
+    private let player: PlayerProtocol
     private let trackReader: TrackReader
     
-    init(trackReader: TrackReader) {
+    init(player: PlayerProtocol, trackReader: TrackReader) {
+        
+        self.player = player
         self.trackReader = trackReader
     }
     

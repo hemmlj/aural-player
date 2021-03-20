@@ -256,32 +256,13 @@ class Playlist: PlaylistCRUDProtocol {
         return groupingPlaylists[groupType.toPlaylistType()]!.dropTracksAndGroups(tracks, groups, dropParent, dropIndex)
     }
     
-    private let reorderOpQueue: OperationQueue = {
-
-        let queue = OperationQueue()
-        queue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-        queue.maxConcurrentOperationCount = 3
-        queue.qualityOfService = .userInteractive
-        
-        return queue
-    }()
-    
     func reOrder(accordingTo state: PlaylistState) {
         
         for (type, playlist) in groupingPlaylists {
             
             if let playlistState = state.groupingPlaylists[type.rawValue] {
-
-                // The different grouping playlists can be reordered in parallel,
-                // because the reorder operations are independent of each other.
-                // In other words, reordering one grouping playlist does not
-                // affect any other grouping playlist.
-                reorderOpQueue.addOperation {
-                    playlist.reOrder(accordingTo: playlistState)
-                }
+                playlist.reOrder(accordingTo: playlistState)
             }
         }
-        
-        reorderOpQueue.waitUntilAllOperationsAreFinished()
     }
 }

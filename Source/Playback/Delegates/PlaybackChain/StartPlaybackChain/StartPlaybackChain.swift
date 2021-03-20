@@ -18,10 +18,9 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
         
         _ = self.withAction(SavePlaybackProfileAction(profiles, preferences))
         .withAction(HaltPlaybackAction(player))
-        .withAction(AudioFilePreparationAction(trackReader: trackReader))
+        .withAction(AudioFilePreparationAction(player: player, trackReader: trackReader))
         .withAction(ApplyPlaybackProfileAction(profiles, preferences))
         .withAction(StartPlaybackAction(player))
-        .withAction(PredictiveTrackPreparationAction(sequencer: sequencer, trackReader: trackReader))
     }
     
     // Halts playback and ends the playback sequence when an error is encountered.
