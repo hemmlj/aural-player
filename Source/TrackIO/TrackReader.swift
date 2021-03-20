@@ -69,10 +69,7 @@ class TrackReader {
     func prepareForPlayback(track: Track) throws {
         
         // Make sure track is valid before trying to prep it for playback.
-        if let prepError = track.preparationError {
-            throw prepError
-            
-        } else if let validationError = track.validationError {
+        if let validationError = track.validationError {
             
             track.preparationError = validationError
             throw validationError
